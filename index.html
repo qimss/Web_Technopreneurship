@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REXPRESS — Sewa Dinosaurus untuk Kendaraan Harianmu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --jungle-deep:#142B1F;
+    --jungle-mid:#1E3E2A;
+    --fern:#2F5D3F;
+    --bone:#F3EEDD;
+    --bone-dim:#e9e2ca;
+    --amber:#D6963B;
+    --ember:#C1440E;
+    --ink:#17210F;
+    --ink-soft:#4B5A42;
+    --line: rgba(23,33,15,0.13);
+    --line-dark: rgba(243,238,221,0.14);
+    --font-display:'Fraunces', Georgia, serif;
+    --font-body:'Inter', 'Segoe UI', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+  :root[data-theme="dark"]{
+    --bone:#20291d;
+    --bone-dim:#1a2216;
+    --ink:#F0EBD8;
+    --ink-soft:#b9c2ab;
+    --line: rgba(240,235,216,0.14);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--jungle-deep);font-family:var(--font-body);color:var(--ink);}
+  img{max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--amber);color:var(--jungle-deep);}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- Nav ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    background:var(--jungle-deep);
+    border-bottom:1px solid var(--line-dark);
+  }
+  .nav-inner{
+    max-width:1120px;margin:0 auto;padding:16px 24px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .logo{
+    font-family:var(--font-display);
+    font-weight:600;font-style:italic;
+    font-size:1.5rem;color:var(--bone);
+    letter-spacing:-0.01em;
+  }
+  .logo em{ color: var(--amber); font-style: italic;}
+  .nav-links{display:flex;gap:28px;align-items:center;}
+  .nav-links a{
+    font-size:0.92rem;color:rgba(243,238,221,0.75);
+  }
+  .nav-links a:hover{color:var(--bone);}
+  .nav-cta{
+    background:var(--ember);color:#fff;
+    padding:10px 18px;border-radius:999px;
+    font-size:0.88rem;font-weight:600;
+  }
+  .nav-cta:hover{background:#a83a0c;}
+  .nav-toggle{display:none;background:none;border:none;color:var(--bone);font-size:1.4rem;cursor:pointer;}
+
+  @media (max-width:760px){
+    .nav-links{
+      position:absolute;top:100%;left:0;right:0;
+      background:var(--jungle-deep);
+      flex-direction:column;align-items:flex-start;
+      padding:18px 24px 24px;gap:16px;
+      border-bottom:1px solid var(--line-dark);
+      display:none;
+    }
+    .nav-links.open{display:flex;}
+    .nav-toggle{display:block;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:
+      radial-gradient(ellipse at 80% 20%, rgba(214,150,59,0.18), transparent 55%),
+      linear-gradient(180deg, var(--jungle-deep), var(--jungle-mid));
+    color:var(--bone);
+    padding:64px 0 90px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.05fr 0.95fr;gap:40px;align-items:center;
+  }
+  @media (max-width:860px){ .hero-grid{grid-template-columns:1fr;} }
+
+  .hero-eyebrow{
+    font-family:var(--font-mono);
+    font-size:0.8rem;letter-spacing:0.02em;
+    color:var(--amber);margin:0 0 18px;
+  }
+  .hero h1{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:clamp(2.1rem, 4.6vw, 3.6rem);
+    line-height:1.08;
+    margin:0 0 22px;
+    max-width:12ch;
+  }
+  .hero h1 i{ color:var(--amber); font-style:italic; }
+  .hero p.lede{
+    font-size:1.08rem;line-height:1.65;
+    color:rgba(243,238,221,0.8);
+    max-width:46ch;margin:0 0 30px;
+  }
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--ember);color:#fff;
+    padding:14px 26px;border-radius:999px;
+    font-weight:600;font-size:0.95rem;
+    border:none;cursor:pointer;
+  }
+  .btn-primary:hover{background:#a83a0c;}
+  .btn-ghost{
+    padding:14px 24px;border-radius:999px;
+    border:1.5px solid rgba(243,238,221,0.35);
+    color:var(--bone);font-weight:600;font-size:0.95rem;
+    background:none;cursor:pointer;
+  }
+  .btn-ghost:hover{border-color:var(--bone);}
+
+  .hero-stats{
+    display:flex;gap:28px;margin-top:40px;flex-wrap:wrap;
+  }
+  .hero-stat b{
+    display:block;font-family:var(--font-mono);
+    font-size:1.3rem;color:var(--amber);
+  }
+  .hero-stat span{font-size:0.8rem;color:rgba(243,238,221,0.6);}
+
+  .hero-art{ display:flex; justify-content:center; }
+  .hero-art svg{ width:100%; max-width:420px; }
+
+  /* ---------- Section shared ---------- */
+  section{padding:78px 0;}
+  .section-tag{
+    font-family:var(--font-mono);
+    font-size:0.78rem;color:var(--ember);
+    margin:0 0 12px;
+  }
+  .section-title{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:clamp(1.7rem,3vw,2.4rem);
+    line-height:1.15;
+    margin:0 0 16px;
+    max-width:16ch;
+  }
+  .section-sub{
+    font-size:1.02rem;color:var(--ink-soft);
+    max-width:56ch;line-height:1.6;margin:0 0 44px;
+  }
+
+  /* ---------- Steps ---------- */
+  .steps-section{ background:var(--fern); color:var(--bone); }
+  .steps-section .section-tag{ color:var(--amber); }
+  .steps-section .section-sub{ color:rgba(243,238,221,0.75); }
+  .steps-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:28px;
+  }
+  @media (max-width:760px){ .steps-grid{grid-template-columns:1fr;} }
+  .step{
+    border-top:2px solid rgba(243,238,221,0.3);
+    padding-top:18px;
+  }
+  .step-num{
+    font-family:var(--font-mono);
+    color:var(--amber);font-size:0.95rem;margin:0 0 10px;
+  }
+  .step h3{
+    font-family:var(--font-display);font-weight:600;
+    font-size:1.25rem;margin:0 0 8px;
+  }
+  .step p{ color:rgba(243,238,221,0.78); line-height:1.6; margin:0; font-size:0.96rem;}
+
+  /* ---------- Catalog ---------- */
+  .catalog-section{ background:var(--bone); }
+  .filter-row{
+    display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px;
+  }
+  .filter-chip{
+    font-family:var(--font-mono);
+    font-size:0.8rem;
+    padding:8px 16px;border-radius:999px;
+    border:1.5px solid var(--line);
+    background:transparent;color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .filter-chip.active{
+    background:var(--ink);color:var(--bone);border-color:var(--ink);
+  }
+  .catalog-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:26px;
+  }
+  @media (max-width:900px){ .catalog-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:620px){ .catalog-grid{grid-template-columns:1fr;} }
+
+  .dino-card{
+    background:var(--bone-dim);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:24px 22px 22px;
+    display:flex;flex-direction:column;
+  }
+  .dino-card .dino-icon{
+    width:100%;height:130px;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:14px;
+  }
+  .dino-card .dino-icon svg{ width:150px; height:110px; }
+  .dino-type{
+    font-family:var(--font-mono);font-size:0.72rem;
+    color:var(--ember);margin:0 0 6px;
+  }
+  .dino-card h3{
+    font-family:var(--font-display);font-weight:600;
+    font-size:1.3rem;margin:0 0 4px;
+  }
+  .dino-card .dino-nick{ color:var(--ink-soft); font-size:0.9rem; margin:0 0 16px;}
+  .spec-list{
+    display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;
+    margin:0 0 18px;
+    font-size:0.82rem;
+  }
+  .spec-list div{ display:flex; flex-direction:column; }
+  .spec-list b{ font-family:var(--font-mono); font-size:0.92rem; }
+  .spec-list span{ color:var(--ink-soft); font-size:0.72rem; }
+  .dino-card .price-row{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-top:auto;padding-top:16px;border-top:1px dashed var(--line);
+  }
+  .dino-card .price{ font-family:var(--font-mono); font-weight:600; font-size:1.05rem;}
+  .dino-card .price span{ font-size:0.72rem; color:var(--ink-soft); font-weight:400; display:block;}
+  .btn-book{
+    background:var(--jungle-deep);color:var(--bone);
+    border:none;padding:10px 16px;border-radius:999px;
+    font-size:0.82rem;font-weight:600;cursor:pointer;
+  }
+  .btn-book:hover{ background:var(--fern); }
+
+  /* ---------- Testimonials ---------- */
+  .testi-section{ background:var(--jungle-deep); color:var(--bone); }
+  .testi-section .section-sub{ color:rgba(243,238,221,0.7); }
+  .testi-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
+  }
+  @media (max-width:860px){ .testi-grid{grid-template-columns:1fr;} }
+  .testi-card{
+    background:rgba(243,238,221,0.05);
+    border:1px solid var(--line-dark);
+    border-radius:12px;padding:24px;
+  }
+  .testi-card p.quote{ font-size:1rem; line-height:1.6; margin:0 0 18px; }
+  .testi-who{ display:flex;flex-direction:column;font-family:var(--font-mono);font-size:0.78rem;color:var(--amber);}
+  .testi-who span{ color:rgba(243,238,221,0.55); }
+
+  /* ---------- FAQ ---------- */
+  .faq-section{ background:var(--bone); }
+  .faq-list{ max-width:720px; }
+  .faq-item{
+    border-bottom:1px solid var(--line);
+  }
+  .faq-q{
+    all:unset;display:flex;width:100%;justify-content:space-between;align-items:center;
+    padding:20px 4px;cursor:pointer;font-family:var(--font-display);font-weight:600;font-size:1.05rem;
+  }
+  .faq-q:focus-visible{ outline:2px solid var(--ember); outline-offset:2px; }
+  .faq-mark{ font-family:var(--font-mono); color:var(--ember); font-size:1.2rem; flex-shrink:0; margin-left:16px;}
+  .faq-a{
+    max-height:0;overflow:hidden;transition:max-height 0.25s ease;
+    font-size:0.96rem;color:var(--ink-soft);line-height:1.65;
+  }
+  .faq-a p{ margin:0 0 18px; padding-right:20px; }
+  .faq-item.open .faq-a{ max-height:220px; }
+
+  /* ---------- Booking ---------- */
+  .book-section{
+    background:var(--fern);color:var(--bone);
+  }
+  .book-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;
+  }
+  @media (max-width:860px){ .book-grid{grid-template-columns:1fr;} }
+  .book-section .section-sub{ color:rgba(243,238,221,0.78); }
+  .book-form{
+    background:rgba(20,43,31,0.35);
+    border:1px solid rgba(243,238,221,0.18);
+    border-radius:14px;padding:28px;
+    display:flex;flex-direction:column;gap:16px;
+  }
+  .field label{
+    display:block;font-family:var(--font-mono);font-size:0.76rem;
+    color:var(--amber);margin-bottom:6px;
+  }
+  .field select, .field input{
+    width:100%;padding:11px 12px;border-radius:8px;
+    border:1px solid rgba(243,238,221,0.25);
+    background:rgba(243,238,221,0.06);color:var(--bone);
+    font-family:var(--font-body);font-size:0.94rem;
+  }
+  .field select option{ color:var(--ink); }
+  .book-form .btn-primary{ margin-top:6px; }
+  .confirm-box{
+    margin-top:16px;padding:14px 16px;border-radius:10px;
+    background:rgba(214,150,59,0.15);border:1px solid rgba(214,150,59,0.4);
+    font-size:0.9rem;display:none;
+  }
+  .confirm-box.show{ display:block; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    background:var(--jungle-deep);color:rgba(243,238,221,0.55);
+    padding:36px 0;font-size:0.82rem;
+    border-top:1px solid var(--line-dark);
+  }
+  .footer-row{
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;align-items:center;
+  }
+  footer .logo{ font-size:1.1rem; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <span class="logo">REX<em>press</em></span>
+    <button class="nav-toggle" id="navToggle" aria-label="Buka menu">☰</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#katalog">Katalog</a>
+      <a href="#cara-kerja">Cara Kerja</a>
+      <a href="#faq">FAQ</a>
+      <a href="#sewa" class="nav-cta">Sewa Sekarang</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="hero-eyebrow">TRANSPORTASI PURBA UNTUK ZAMAN SEKARANG</p>
+      <h1>Kenapa naik mobil kalau bisa naik <i>dinosaurus</i>?</h1>
+      <p class="lede">Rexpress menyewakan dinosaurus terlatih sebagai kendaraan harian — dari commuting kantor sampai pindahan rumah. Sudah dijinakkan, sudah diasuransikan, sudah kenyang.</p>
+      <div class="hero-ctas">
+        <button class="btn-primary" onclick="document.getElementById('sewa').scrollIntoView({behavior:'smooth'})">Sewa dinosaurusmu</button>
+        <button class="btn-ghost" onclick="document.getElementById('katalog').scrollIntoView({behavior:'smooth'})">Lihat katalog</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><b>128 jt tahun</b><span>pengalaman evolusi</span></div>
+        <div class="hero-stat"><b>0 emisi karbon</b><span>*kecuali dari mulut Rex</span></div>
+        <div class="hero-stat"><b>6 unit</b><span>jenis kendaraan tersedia</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="200" cy="290" rx="150" ry="16" fill="rgba(0,0,0,0.25)"/>
+        <path d="M60 230 C50 180 90 120 150 100 C160 70 190 40 230 45 C225 60 220 75 230 85 C270 90 300 120 300 160 C320 165 335 180 330 200 C310 195 295 205 290 220 C260 240 210 245 180 235 C150 250 90 250 60 230 Z" fill="#D6963B"/>
+        <path d="M150 100 C160 70 190 40 230 45 C225 60 220 75 230 85" fill="none" stroke="#a86a1f" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="222" cy="60" r="6" fill="#17210F"/>
+        <path d="M100 130 L80 90 L115 120 Z" fill="#a86a1f"/>
+        <path d="M140 115 L125 70 L155 108 Z" fill="#a86a1f"/>
+        <path d="M180 108 L170 62 L195 100 Z" fill="#a86a1f"/>
+        <path d="M80 220 L70 280 L95 280 L100 225 Z" fill="#c07f2f"/>
+        <path d="M150 235 L145 285 L172 285 L172 232 Z" fill="#c07f2f"/>
+        <path d="M270 220 C300 235 320 260 300 280 L280 275 C285 255 275 240 265 232 Z" fill="#D6963B"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="steps-section" id="cara-kerja">
+  <div class="wrap">
+    <p class="section-tag">CARA KERJA</p>
+    <h2 class="section-title">Tiga langkah, langsung ngebut</h2>
+    <p class="section-sub">Tidak perlu SIM khusus dinosaurus. Cukup ikuti tiga langkah ini dan Rex-mu siap mengantar.</p>
+    <div class="steps-grid">
+      <div class="step">
+        <p class="step-num">01</p>
+        <h3>Pilih dinosaurus</h3>
+        <p>Sesuaikan dengan kebutuhan: commuting cepat, angkut barang, atau sekadar gaya-gayaan di jalan.</p>
+      </div>
+      <div class="step">
+        <p class="step-num">02</p>
+        <h3>Jadwalkan penjemputan</h3>
+        <p>Pilih tanggal dan lokasi. Tim kami akan mengantar dinosaurus pilihanmu lengkap dengan pelana dan makanannya.</p>
+      </div>
+      <div class="step">
+        <p class="step-num">03</p>
+        <h3>Naik dan jalan</h3>
+        <p>Instruktur singkat 10 menit, lalu kamu bebas menjelajah kota dengan kendaraan paling purba di jalanan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="catalog-section" id="katalog">
+  <div class="wrap">
+    <p class="section-tag">KATALOG ARMADA</p>
+    <h2 class="section-title">Pilih kendaraan purbamu</h2>
+    <p class="section-sub">Setiap unit sudah melalui proses jinak-uji dan dilengkapi lembar spesifikasi lengkap, seperti menyewa mobil — hanya saja bernapas dan kadang lapar.</p>
+
+    <div class="filter-row" id="filterRow">
+      <button class="filter-chip active" data-filter="semua">Semua</button>
+      <button class="filter-chip" data-filter="darat">Darat</button>
+      <button class="filter-chip" data-filter="udara">Udara</button>
+    </div>
+
+    <div class="catalog-grid" id="catalogGrid"></div>
+  </div>
+</section>
+
+<section class="testi-section">
+  <div class="wrap">
+    <p class="section-tag">CERITA PENYEWA</p>
+    <h2 class="section-title">Kata mereka yang sudah menunggangi</h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <p class="quote">"Macet Jakarta jadi tidak masalah. Velociraptor saya bisa selip di antara motor tanpa insiden — kecuali satu spion."</p>
+        <div class="testi-who">Damar S. <span>Pengguna harian, Sprint</span></div>
+      </div>
+      <div class="testi-card">
+        <p class="quote">"Pindahan rumah jadi satu kali jalan. Brachiosaurus saya sanggup bawa lemari, kasur, dan mertua sekaligus."</p>
+        <div class="testi-who">Ratna W. <span>Pengguna acara, Highrise</span></div>
+      </div>
+      <div class="testi-card">
+        <p class="quote">"Anak-anak kompleks jadi kenal saya sebagai 'Bapak Triceratops'. Status sosial naik drastis."</p>
+        <div class="testi-who">Bagas P. <span>Pengguna akhir pekan, Tank</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section" id="faq">
+  <div class="wrap">
+    <p class="section-tag">PERTANYAAN UMUM</p>
+    <h2 class="section-title">Sebelum kamu menunggangi</h2>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<section class="book-section" id="sewa">
+  <div class="wrap book-grid">
+    <div>
+      <p class="section-tag" style="color:var(--amber)">SEWA SEKARANG</p>
+      <h2 class="section-title">Jadwalkan penjemputan dinosaurusmu</h2>
+      <p class="section-sub">Isi form di samping, dan Rex pilihanmu akan tiba sesuai jadwal — sudah dimandikan dan tidak dalam keadaan lapar.</p>
+    </div>
+    <form class="book-form" id="bookForm">
+      <div class="field">
+        <label for="dinoSelect">Pilih dinosaurus</label>
+        <select id="dinoSelect" required></select>
+      </div>
+      <div class="field">
+        <label for="dateInput">Tanggal penjemputan</label>
+        <input type="date" id="dateInput" required>
+      </div>
+      <div class="field">
+        <label for="passengerInput">Jumlah penumpang</label>
+        <input type="number" id="passengerInput" min="1" max="8" value="1" required>
+      </div>
+      <button type="submit" class="btn-primary">Konfirmasi sewa</button>
+      <div class="confirm-box" id="confirmBox"></div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-row">
+    <span class="logo">REX<em style="font-style:italic;color:var(--amber)">press</em></span>
+    <span>© 2026 Rexpress — layanan fiktif untuk kesenangan semata. Tidak ada dinosaurus sungguhan yang disewakan.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const DINOS = [
+    {
+      name: "Velociraptor",
+      nick: "\u201cSprint\u201d",
+      type: "darat",
+      speed: "48 km/j",
+      seats: "1 org",
+      fuel: "Daging segar",
+      tame: "3 hari",
+      price: "Rp180.000/hari",
+      icon: `<path d="M20 90 C20 60 45 40 75 45 C80 25 100 10 120 15 C118 25 116 33 122 40 C145 42 160 60 158 78 C170 80 178 90 174 100 C162 96 155 102 152 110 C130 122 95 124 78 116 C55 128 25 110 20 90 Z" fill="#3F6B4B"/>
+                <path d="M118 15 L128 -2 L134 22 Z" fill="#254631"/>
+                <circle cx="112" cy="30" r="4" fill="#F3EEDD"/>
+                <path d="M40 100 L32 135 L50 135 L52 105 Z" fill="#2c5138"/>
+                <path d="M78 116 L74 140 L92 140 L92 118 Z" fill="#2c5138"/>
+                <path d="M155 100 C172 108 182 122 172 132 L158 128 C160 118 152 108 145 102 Z" fill="#3F6B4B"/>`
+    },
+    {
+      name: "Triceratops",
+      nick: "\u201cTank\u201d",
+      type: "darat",
+      speed: "32 km/j",
+      seats: "4 org",
+      fuel: "Dedaunan",
+      tame: "6 hari",
+      price: "Rp260.000/hari",
+      icon: `<ellipse cx="90" cy="90" rx="70" ry="34" fill="#8a6a3f"/>
+              <path d="M20 78 C10 60 20 40 45 38 C50 22 66 10 84 14 C88 26 84 34 90 40 C112 36 128 50 122 66 L20 78 Z" fill="#a8875a"/>
+              <path d="M45 38 L38 8 L58 32 Z" fill="#6f5330"/>
+              <path d="M84 14 L84 -10 L100 18 Z" fill="#6f5330"/>
+              <path d="M90 40 L106 20 L112 46 Z" fill="#6f5330"/>
+              <circle cx="60" cy="46" r="4" fill="#231a10"/>
+              <path d="M40 112 L34 140 L52 140 L54 116 Z" fill="#6f5330"/>
+              <path d="M100 118 L96 144 L114 144 L116 120 Z" fill="#6f5330"/>
+              <path d="M150 90 C165 96 172 108 165 116 L152 112 Z" fill="#8a6a3f"/>`
+    },
+    {
+      name: "Brachiosaurus",
+      nick: "\u201cHighrise\u201d",
+      type: "darat",
+      speed: "18 km/j",
+      seats: "8 org",
+      fuel: "1 ton dedaunan",
+      tame: "12 hari",
+      price: "Rp420.000/hari",
+      icon: `<ellipse cx="110" cy="100" rx="60" ry="26" fill="#3F6B4B"/>
+              <path d="M70 90 C50 60 45 20 65 -10 C75 -8 78 0 76 12 C90 10 96 22 90 34 C96 50 92 70 78 82 Z" fill="#2c5138"/>
+              <circle cx="68" cy="-6" r="7" fill="#254631"/>
+              <path d="M50 118 L44 148 L60 148 L62 122 Z" fill="#2c5138"/>
+              <path d="M120 122 L116 150 L134 150 L136 124 Z" fill="#2c5138"/>
+              <path d="M160 100 C185 106 200 120 190 130 L170 122 Z" fill="#3F6B4B"/>`
+    },
+    {
+      name: "Pteranodon",
+      nick: "\u201cSkyline\u201d",
+      type: "udara",
+      speed: "65 km/j",
+      seats: "1 org",
+      fuel: "Ikan",
+      tame: "9 hari",
+      price: "Rp310.000/hari",
+      icon: `<path d="M100 80 C60 40 10 30 -10 45 C10 55 35 60 45 70 C20 75 0 90 -5 110 C25 100 55 92 75 95 C70 110 75 128 90 135 C95 118 100 100 110 92 C130 100 155 112 175 108 C165 92 145 80 130 78 C155 65 190 55 210 40 C185 30 145 40 120 65 C112 70 106 75 100 80 Z" fill="#D6963B"/>
+              <circle cx="102" cy="82" r="5" fill="#17210F"/>`
+    },
+    {
+      name: "Ankylosaurus",
+      nick: "\u201cArmor\u201d",
+      type: "darat",
+      speed: "24 km/j",
+      seats: "3 org",
+      fuel: "Pakis & lumut",
+      tame: "10 hari",
+      price: "Rp300.000/hari",
+      icon: `<ellipse cx="95" cy="95" rx="75" ry="30" fill="#4b5a42"/>
+              <path d="M35 78 L45 62 L58 78 Z" fill="#38452f"/>
+              <path d="M60 70 L68 54 L80 70 Z" fill="#38452f"/>
+              <path d="M85 66 L92 50 L104 66 Z" fill="#38452f"/>
+              <path d="M110 70 L118 54 L130 70 Z" fill="#38452f"/>
+              <circle cx="30" cy="92" r="6" fill="#17210F"/>
+              <path d="M155 100 C180 100 200 115 195 132 C185 132 178 138 176 148 C168 138 170 122 160 112 Z" fill="#4b5a42"/>
+              <circle cx="192" cy="122" r="14" fill="#38452f"/>`
+    },
+    {
+      name: "Stegosaurus",
+      nick: "\u201cCruiser\u201d",
+      type: "darat",
+      speed: "20 km/j",
+      seats: "2 org",
+      fuel: "Rerumputan",
+      tame: "8 hari",
+      price: "Rp240.000/hari",
+      icon: `<ellipse cx="100" cy="98" rx="72" ry="26" fill="#a8875a"/>
+              <path d="M40 84 L48 60 L60 84 Z" fill="#8a6a3f"/>
+              <path d="M65 78 L74 50 L86 78 Z" fill="#8a6a3f"/>
+              <path d="M92 76 L100 46 L112 76 Z" fill="#8a6a3f"/>
+              <path d="M118 78 L126 52 L138 78 Z" fill="#8a6a3f"/>
+              <path d="M143 84 L150 62 L160 84 Z" fill="#8a6a3f"/>
+              <path d="M28 92 C20 76 26 62 40 58 C42 68 40 78 46 88 Z" fill="#a8875a"/>
+              <circle cx="30" cy="80" r="4" fill="#231a10"/>
+              <path d="M165 100 C178 108 182 120 172 126 L162 118 C166 112 165 105 160 100 Z" fill="#a8875a"/>`
+    }
+  ];
+
+  const FAQS = [
+    {
+      q: "Apakah dinosaurusnya benar-benar aman dikendarai?",
+      a: "Ya — setiap unit sudah menjalani pelatihan jinak-uji dan hanya diserahkan setelah lulus sertifikasi keselamatan internal Rexpress. Instruktur akan mendampingi 10 menit pertama sebelum kamu berangkat sendiri."
+    },
+    {
+      q: "Apa yang terjadi kalau dinosaurusnya lapar di jalan?",
+      a: "Setiap kendaraan dilengkapi kompartemen pakan darurat sesuai jenisnya. Untuk unit karnivora seperti Velociraptor, kami sarankan jadwal makan dipatuhi ketat sebelum perjalanan jauh."
+    },
+    {
+      q: "Bagaimana dengan parkir?",
+      a: "Rexpress bekerja sama dengan sejumlah lahan parkir berkapasitas besar di kota-kota tertentu. Untuk unit seperti Brachiosaurus, disarankan memesan lokasi drop-off khusus terlebih dulu."
+    },
+    {
+      q: "Apakah ada batasan usia penyewa?",
+      a: "Penyewa harus berusia minimal 18 tahun. Anak-anak dapat ikut sebagai penumpang dengan pendampingan dewasa dan sabuk pengaman standar Rexpress."
+    },
+    {
+      q: "Bagaimana kalau dinosaurusnya rusak atau terluka?",
+      a: "Setiap sewa sudah termasuk asuransi dasar. Kerusakan di luar pemakaian wajar akan dikenakan biaya tambahan sesuai ketentuan yang dijelaskan saat serah terima."
+    }
+  ];
+
+  // Render catalog
+  const grid = document.getElementById('catalogGrid');
+  const dinoSelect = document.getElementById('dinoSelect');
+
+  function renderCatalog(filter){
+    grid.innerHTML = '';
+    DINOS.filter(d => filter === 'semua' || d.type === filter).forEach(d => {
+      const card = document.createElement('div');
+      card.className = 'dino-card';
+      card.innerHTML = `
+        <div class="dino-icon"><svg viewBox="-20 -20 240 180" xmlns="http://www.w3.org/2000/svg">${d.icon}</svg></div>
+        <p class="dino-type">${d.type === 'udara' ? 'KENDARAAN UDARA' : 'KENDARAAN DARAT'}</p>
+        <h3>${d.name}</h3>
+        <p class="dino-nick">${d.nick}</p>
+        <div class="spec-list">
+          <div><b>${d.speed}</b><span>Kecepatan maks</span></div>
+          <div><b>${d.seats}</b><span>Kapasitas</span></div>
+          <div><b>${d.fuel}</b><span>Konsumsi harian</span></div>
+          <div><b>${d.tame}</b><span>Masa jinak-uji</span></div>
+        </div>
+        <div class="price-row">
+          <div class="price">${d.price}<span>termasuk instruktur</span></div>
+          <button class="btn-book" data-dino="${d.name}">Sewa</button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  DINOS.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d.name;
+    opt.textContent = `${d.name} ${d.nick} — ${d.price}`;
+    dinoSelect.appendChild(opt);
+  });
+
+  renderCatalog('semua');
+
+  document.getElementById('filterRow').addEventListener('click', (e) => {
+    const btn = e.target.closest('.filter-chip');
+    if (!btn) return;
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    renderCatalog(btn.dataset.filter);
+  });
+
+  grid.addEventListener('click', (e) => {
+    const btn = e.target.closest('.btn-book');
+    if (!btn) return;
+    dinoSelect.value = btn.dataset.dino;
+    document.getElementById('sewa').scrollIntoView({behavior:'smooth'});
+  });
+
+  // FAQ
+  const faqList = document.getElementById('faqList');
+  FAQS.forEach((f, i) => {
+    const item = document.createElement('div');
+    item.className = 'faq-item';
+    item.innerHTML = `
+      <button class="faq-q">${f.q}<span class="faq-mark">+</span></button>
+      <div class="faq-a"><p>${f.a}</p></div>
+    `;
+    faqList.appendChild(item);
+  });
+  faqList.addEventListener('click', (e) => {
+    const q = e.target.closest('.faq-q');
+    if (!q) return;
+    const item = q.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(el => {
+      el.classList.remove('open');
+      el.querySelector('.faq-mark').textContent = '+';
+    });
+    if (!wasOpen) {
+      item.classList.add('open');
+      item.querySelector('.faq-mark').textContent = '\u2212';
+    }
+  });
+
+  // Booking form
+  document.getElementById('bookForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const dino = dinoSelect.value;
+    const date = document.getElementById('dateInput').value;
+    const pax = document.getElementById('passengerInput').value;
+    const box = document.getElementById('confirmBox');
+    box.textContent = `Sewa dikonfirmasi: ${dino} akan dijadwalkan tiba pada ${date || '(tanggal belum dipilih)'} untuk ${pax} penumpang. Tim kami akan menghubungi untuk detail penjemputan.`;
+    box.classList.add('show');
+  });
+
+  // Mobile nav
+  document.getElementById('navToggle').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+})();
+</script>
+</body>
+</html>
